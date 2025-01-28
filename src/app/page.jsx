@@ -160,7 +160,7 @@ function MainComponent() {
                 className="animate-[float_3s_ease-in-out_infinite]"
               >
                 <a
-                  href="https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=0&scope=bot%20applications.commands"
+                  href="https://discord.com/api/oauth2/authorize?client_id=1282723690311581756&permissions=0&scope=bot%20applications.commands"
                   className={`bg-[#4F46E5] hover:bg-[#4338CA] px-8 py-4 rounded-xl text-white font-bold text-lg inline-flex items-center space-x-3 shadow-lg hover:shadow-[#4F46E5]/20 transition-all ${
                     isHovered ? "scale-105" : ""
                   }`}
