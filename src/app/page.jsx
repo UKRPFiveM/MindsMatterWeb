@@ -154,6 +154,7 @@ function MainComponent() {
             </div>
 
             <div className="flex flex-col md:flex-row gap-8 justify-center items-center mt-12">
+              {/* Add to Discord Button */}
               <div
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
@@ -167,6 +168,23 @@ function MainComponent() {
                 >
                   <i className="fab fa-discord text-2xl" />
                   <span>Add to Discord</span>
+                </a>
+              </div>
+
+              {/* Join Discord Server Button */}
+              <div
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                className="animate-[float_3s_ease-in-out_infinite]"
+              >
+                <a
+                  href="https://discord.gg/w44ttXFrGK" // Replace with your actual invite link
+                  className={`bg-[#4F46E5] hover:bg-[#4338CA] px-8 py-4 rounded-xl text-white font-bold text-lg inline-flex items-center space-x-3 shadow-lg hover:shadow-[#4F46E5]/20 transition-all ${
+                    isHovered ? "scale-105" : ""
+                  }`}
+                >
+                  <i className="fab fa-discord text-2xl" />
+                  <span>Join Discord Server</span>
                 </a>
               </div>
             </div>
@@ -345,13 +363,25 @@ function MainComponent() {
 
       <style jsx global>{`
         @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-          100% { transform: translateY(0px); }
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
         }
         @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
       `}</style>
     </div>
