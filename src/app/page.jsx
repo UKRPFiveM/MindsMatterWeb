@@ -555,7 +555,7 @@ function MainComponent() {
               Our Partners
             </h2>
             <p className="text-center text-lg mb-10 max-w-3xl mx-auto">
-              We're proud to partner with these amazing mental health communities. Join them to expand your support network.
+            We're proud to partner with these communities that support those struggling with mental health.
             </p>
             
             <div className="grid md:grid-cols-3 gap-8">
