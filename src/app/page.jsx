@@ -5,6 +5,27 @@ function MainComponent() {
   const [activeSection, setActiveSection] = useState("home");
   const [isHovered, setIsHovered] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [showBanner, setShowBanner] = useState(true); // State to control banner visibility
+  const partners = [
+    {
+      name: "London's Frontline RP",
+      logo: "/LFRP_Logo.png",
+      invite: "https://discord.gg/E276UvPTBm",
+      description: "A returning FiveM community called London's Frontline Roleplay"
+    },
+    {
+      name: "Blake's Community",
+      logo: "/blake.png",
+      invite: "https://discord.gg/SqPKkBxWhc",
+      description: "A streaming community where you can make friends that last. "
+    },
+    {
+      name: "BeePlayzz_ Hangout",
+      logo: "/bee.png",
+      invite: "https://discord.gg/jBjw2S6D2A",
+      description: "A streaming community where you can hangout and make friends."
+    }
+  ];
   const commands = {
     "Mental Health Support": [
       {
@@ -58,7 +79,6 @@ function MainComponent() {
     { name: "Mental Health UK", url: "https://mentalhealth-uk.org" },
     { name: "Rethink Mental Illness", url: "https://www.rethink.org" },
   ];
-
   return (
     <div
       className={`min-h-screen font-poppins ${
@@ -67,6 +87,27 @@ function MainComponent() {
           : "bg-gradient-to-b from-white to-gray-100 text-gray-800"
       }`}
     >
+      {/* Recruitment Banner */}
+      {showBanner && (
+        <div className={`${isDark ? 'bg-[#4F46E5]' : 'bg-[#4F46E5]'} text-white py-4 px-4 relative`}>
+          <div className="container mx-auto flex justify-between items-center">
+            <div className="flex items-center">
+              <i className="fas fa-bullhorn mr-4 text-2xl animate-pulse"></i>
+              <p className="font-bold text-lg">
+                We are recruiting staff in our Discord!<a href="https://discord.gg/w44ttXFrGK" className="underline font-bold hover:text-white/80 transition-colors ml-1">Join now</a> to apply!
+              </p>
+            </div>
+            <button 
+              onClick={() => setShowBanner(false)} 
+              className="text-white/80 hover:text-white transition-colors text-xl"
+              aria-label="Close banner"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      )}
+
       <nav
         className={`backdrop-blur-lg ${
           isDark ? "bg-gray-800/80" : "bg-white/80"
@@ -77,8 +118,8 @@ function MainComponent() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between py-4">
             <div className="flex items-center space-x-3 mb-4 md:mb-0">
-              <i className="fas fa-brain text-[#4F46E5] text-3xl" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] text-transparent bg-clip-text">
+              <i className="fas fa-brain text-[#4F46E5] text-2xl md:text-3xl" />
+              <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] text-transparent bg-clip-text">
                 Minds Matter
               </span>
             </div>
@@ -97,8 +138,7 @@ function MainComponent() {
               </button>
               <button
                 onClick={() => setActiveSection("commands")}
-                className={`px-4 py-2 rounded-lg transition-all ${
-                  activeSection === "commands"
+                className={`px-4 py-2 rounded-lg transition-all ${activeSection === "commands"
                     ? "bg-[#4F46E5]/10 text-[#4F46E5]"
                     : isDark
                     ? "hover:text-[#4F46E5] text-white"
@@ -109,8 +149,7 @@ function MainComponent() {
               </button>
               <button
                 onClick={() => setActiveSection("help")}
-                className={`px-4 py-2 rounded-lg transition-all ${
-                  activeSection === "help"
+                className={`px-4 py-2 rounded-lg transition-all ${activeSection === "help"
                     ? "bg-[#4F46E5]/10 text-[#4F46E5]"
                     : isDark
                     ? "hover:text-[#4F46E5] text-white"
@@ -118,6 +157,17 @@ function MainComponent() {
                 }`}
               >
                 Get Help
+              </button>
+              <button
+                onClick={() => setActiveSection("partners")}
+                className={`px-4 py-2 rounded-lg transition-all ${activeSection === "partners"
+                    ? "bg-[#4F46E5]/10 text-[#4F46E5]"
+                    : isDark
+                    ? "hover:text-[#4F46E5] text-white"
+                    : "hover:text-[#4F46E5]"
+                }`}
+              >
+                Partners
               </button>
               <button
                 onClick={() => setIsDark(!isDark)}
@@ -135,7 +185,7 @@ function MainComponent() {
       </nav>
 
       <main className="container mx-auto px-4 py-12 relative z-10">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/pattern.svg')] opacity-5 pointer-events-none" />
+
 
         {activeSection === "home" && (
           <div className="text-center space-y-12 animate-[fadeIn_1s_ease-out]">
@@ -167,7 +217,7 @@ function MainComponent() {
                   }`}
                 >
                   <i className="fab fa-discord text-2xl" />
-                  <span>Add to Discord</span>
+                  <span>Add bot to server</span>
                 </a>
               </div>
 
@@ -344,6 +394,58 @@ function MainComponent() {
                   </a>
                 ))}
               </div>
+            </div>
+          </div>
+        )}
+
+        {activeSection === "partners" && (
+          <div className="space-y-8 animate-fadeIn">
+            <h2 className="text-3xl font-bold text-center mb-8">
+              Our Partners
+            </h2>
+            <p className="text-center text-lg mb-10 max-w-3xl mx-auto">
+              We're proud to partner with these amazing mental health communities. Join them to expand your support network.
+            </p>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {partners.map((partner) => (
+                <div 
+                  key={partner.name}
+                  className={`${isDark ? "bg-gray-800" : "bg-white"} rounded-lg p-6 shadow-sm border 
+                  ${isDark ? "border-gray-700" : "border-gray-200"} hover:border-[#4F46E5]/50 transition-all flex flex-col items-center text-center`}
+                >
+                  <div className="w-32 h-32 mb-4 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                    <img 
+                      src={partner.logo} 
+                      alt={`${partner.name} logo`} 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/placeholder-logo.png";
+                      }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-[#4F46E5]">{partner.name}</h3>
+                  <p className={`mb-4 ${isDark ? "text-gray-300" : "text-gray-600"}`}>
+                    {partner.description}
+                  </p>
+                  <a
+                    href={partner.invite}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto bg-[#4F46E5] hover:bg-[#4338CA] px-4 py-2 rounded-lg text-white font-medium inline-flex items-center space-x-2 transition-colors"
+                  >
+                    <i className="fab fa-discord" />
+                    <span>Join Community</span>
+                  </a>
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-12 text-center">
+              <p className={`text-lg ${isDark ? "text-gray-300" : "text-gray-600"}`}>
+                Want to partner with us? <a href="https://discord.gg/w44ttXFrGK" className="text-[#4F46E5] hover:underline">Contact us on Discord</a>.
+              </p>
             </div>
           </div>
         )}
