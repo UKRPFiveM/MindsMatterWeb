@@ -116,7 +116,7 @@ function StaffPage() {
                       Get Help
                     </a>
                     <a
-                      href="/partners"
+                      href="/#partners"
                       className={`block w-full text-left px-4 py-2 text-sm ${activeSection === "partners" ? "text-[#4F46E5] font-medium" : isDark ? "text-white" : "text-gray-700"}`}
                     >
                       Partners
