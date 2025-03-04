@@ -175,6 +175,12 @@ function MainComponent() {
                     >
                       Partners
                     </button>
+                    <a
+                      href="/staff"
+                      className={`block w-full text-left px-4 py-2 text-sm ${activeSection === "staff" ? "text-[#4F46E5] font-medium" : isDark ? "text-white" : "text-gray-700"}`}
+                    >
+                      Staff
+                    </a>
                   </div>
                 )}
               </div>
@@ -242,6 +248,17 @@ function MainComponent() {
               >
                 Partners
               </button>
+              <a
+                href="/staff"
+                className={`px-4 py-2 rounded-lg transition-all ${activeSection === "staff"
+                    ? "bg-[#4F46E5]/10 text-[#4F46E5]"
+                    : isDark
+                    ? "hover:text-[#4F46E5] text-white"
+                    : "hover:text-[#4F46E5]"
+                }`}
+              >
+                Staff
+              </a>
               <button
                 onClick={() => setIsDark(!isDark)}
                 className={`p-2 rounded-lg transition-all ${
@@ -317,6 +334,21 @@ function MainComponent() {
                   }`}
                 >
                   Partners
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveSection("staff");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`px-4 py-2 rounded-lg transition-all ${
+                    activeSection === "staff"
+                      ? "bg-[#4F46E5]/10 text-[#4F46E5]"
+                      : isDark
+                      ? "hover:text-[#4F46E5] text-white"
+                      : "hover:text-[#4F46E5]"
+                  }`}
+                >
+                  Staff
                 </button>
                 <button
                   onClick={() => setIsDark(!isDark)}

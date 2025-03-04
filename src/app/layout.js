@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Minds Matter UK',
-  description: 'Minds Matter UK Discord Bot.',
+  description: 'Minds Matter, a mental health support bot for your discord server.',
 }
 
 export default function RootLayout({ children }) {
