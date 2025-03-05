@@ -11,10 +11,10 @@ function StaffPage() {
   // Staff members data
   const staffMembers = [
     {
-      name: "Jay",
-      discordName: ".jay16._",
+      name: "Jack",
+      discordName: "jackfm16",
       role: "Owner",
-      avatar: "/Jayown.png", // You'll need to add these images to your public folder
+      avatar: "/Jayown.png", 
       description: "Founder and owner of Minds Matter UK"
     },
     {
@@ -32,10 +32,24 @@ function StaffPage() {
       description: "Handles outreach and new partnerships"
     },
     {
+      name: "Connor",
+      discordName: "cxznnoro",
+      role: "Partnership Manager",
+      avatar: "/connor.png",
+      description: "Handles outreach and new partnerships"
+    },
+    {
       name: "Charlie",
       discordName: "charlie_298",
       role: "Support Team",
       avatar: "/charlie.png",
+      description: "Provides community support and assistance"
+    },
+    {
+      name: "Solar",
+      discordName: ".sol\_69.",
+      role: "Support Team",
+      avatar: "/sol.png",
       description: "Provides community support and assistance"
     }
   ];
