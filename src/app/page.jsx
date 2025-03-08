@@ -5,9 +5,16 @@ function MainComponent() {
   const [activeSection, setActiveSection] = useState("home");
   const [isHovered, setIsHovered] = useState(false);
   const [isDark, setIsDark] = useState(false);
-  const [showBanner, setShowBanner] = useState(true); // State to control banner visibility
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [showPartnerModal, setShowPartnerModal] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [partnerFormData, setPartnerFormData] = useState({
+    discordId: "",
+    adMessage: "",
+    memberCount: "",
+    whyPartner: ""
+  });
   const partners = [
     {
       name: "London's Frontline RP",
@@ -89,26 +96,7 @@ function MainComponent() {
           : "bg-gradient-to-b from-white to-gray-100 text-gray-800"
       }`}
     >
-      {/* Recruitment Banner */}
-      {showBanner && (
-        <div className="w-full bg-[#4F46E5] text-white py-4 px-0 relative">
-          <div className="w-full px-4 flex justify-between items-center">
-            <div className="flex items-center">
-              <i className="fas fa-bullhorn mr-4 text-2xl animate-pulse"></i>
-              <p className="font-bold text-lg">
-                We are recruiting staff in our Discord!<a href="https://discord.gg/w44ttXFrGK" className="underline font-bold hover:text-white/80 transition-colors ml-1">Join now</a> to apply!
-              </p>
-            </div>
-            <button 
-              onClick={() => setShowBanner(false)} 
-              className="text-white/80 hover:text-white transition-colors text-xl"
-              aria-label="Close banner"
-            >
-              <i className="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Banner removed because apps shut */}
 
       <nav
         className={`backdrop-blur-lg ${
@@ -623,10 +611,167 @@ function MainComponent() {
             </div>
             
             <div className="mt-12 text-center">
-              <p className={`text-lg ${isDark ? "text-gray-300" : "text-gray-600"}`}>
-                Want to partner with us? <a href="https://discord.gg/w44ttXFrGK" className="text-[#4F46E5] hover:underline">Contact us on Discord</a>.
-              </p>
+              <button
+                onClick={() => setShowPartnerModal(true)}
+                className="bg-[#4F46E5] hover:bg-[#4338CA] px-8 py-4 rounded-xl text-white font-bold text-lg inline-flex items-center space-x-3 shadow-lg hover:shadow-[#4F46E5]/20 transition-all"
+              >
+                <i className="fas fa-handshake mr-2" />
+                Apply for Partnership
+              </button>
             </div>
+            
+            {/* Success Confirmation Toast */}
+            {showConfirmation && (
+              <div className="fixed bottom-4 right-4 bg-[#4F46E5] text-white px-6 py-4 rounded-xl shadow-lg animate-[fadeIn_0.3s_ease-out] z-50 flex items-center space-x-2">
+                <i className="fas fa-check-circle text-xl" />
+                <span className="font-medium">Partnership application submitted successfully!</span>
+              </div>
+            )}
+            
+            {/* Partnership Application Modal */}
+            {showPartnerModal && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
+                <div className="w-full max-w-md bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] rounded-2xl shadow-xl transform transition-all animate-slideIn">
+                  <div className="p-6">
+                    <div className="flex justify-between items-center mb-6">
+                      <h3 className="text-2xl font-bold text-white">Partnership Application</h3>
+                      <button
+                        onClick={() => setShowPartnerModal(false)}
+                        className="text-white/80 hover:text-white transition-colors"
+                      >
+                        <i className="fas fa-times text-xl" />
+                      </button>
+                    </div>
+                    <form className="space-y-4" onSubmit={async (e) => {
+                      e.preventDefault();
+                      
+                      // Discord webhook URL
+                      const webhookUrl = "https://discord.com/api/webhooks/1348010717277720617/ubzf0qsOAuAXMnbU7giF21_4BWt5amCaoWrSe9pV7hOPC9JqXcI1IR-vJULkBJXqdVN4";
+                      
+                      // Create embed for Discord webhook
+                      const embed = {
+                        title: "New Partnership Application",
+                        color: 5165349, // #4F46E5 in decimal
+                        fields: [
+                          {
+                            name: "Discord ID",
+                            value: partnerFormData.discordId,
+                            inline: true
+                          },
+                          {
+                            name: "Member Count",
+                            value: partnerFormData.memberCount,
+                            inline: true
+                          },
+                          {
+                            name: "Advertisement Message",
+                            value: partnerFormData.adMessage
+                          },
+                          {
+                            name: "Why should we partner with you?",
+                            value: partnerFormData.whyPartner
+                          }
+                        ],
+                        timestamp: new Date().toISOString()
+                      };
+                      
+                      // Send data to Discord webhook
+                      try {
+                        await fetch(webhookUrl, {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            embeds: [embed]
+                          })
+                        });
+                      } catch (error) {
+                        console.error('Error sending webhook:', error);
+                      }
+                      
+                      setShowConfirmation(true);
+                      setShowPartnerModal(false);
+                    }}>
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">
+                          Discord ID <a href="https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white underline text-xs">(How to get your ID?)</a>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={partnerFormData.discordId}
+                          onChange={(e) => setPartnerFormData({...partnerFormData, discordId: e.target.value})}
+                          className="w-full px-4 py-2 rounded-lg border border-white/20 bg-white/10 text-white focus:ring-2 focus:ring-white/50 focus:border-white/30 transition-all placeholder-white/50"
+                          placeholder="Your Discord ID"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">
+                          Server Member Count
+                        </label>
+                        <input
+                          type="number"
+                          required
+                          value={partnerFormData.memberCount}
+                          onChange={(e) => setPartnerFormData({...partnerFormData, memberCount: e.target.value})}
+                          className="w-full px-4 py-2 rounded-lg border border-white/20 bg-white/10 text-white focus:ring-2 focus:ring-white/50 focus:border-white/30 transition-all placeholder-white/50"
+                          placeholder="Number of members"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">
+                          Advertisement Message
+                        </label>
+                        <textarea
+                          required
+                          value={partnerFormData.adMessage}
+                          onChange={(e) => setPartnerFormData({...partnerFormData, adMessage: e.target.value})}
+                          className="w-full px-4 py-2 rounded-lg border border-white/20 bg-white/10 text-white focus:ring-2 focus:ring-white/50 focus:border-white/30 transition-all min-h-[100px] placeholder-white/50"
+                          placeholder="Your server's advertisement message"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">
+                          Why should we partner with you?
+                        </label>
+                        <textarea
+                          required
+                          value={partnerFormData.whyPartner}
+                          onChange={(e) => setPartnerFormData({...partnerFormData, whyPartner: e.target.value})}
+                          className="w-full px-4 py-2 rounded-lg border border-white/20 bg-white/10 text-white focus:ring-2 focus:ring-white/50 focus:border-white/30 transition-all min-h-[100px] placeholder-white/50"
+                          placeholder="Tell us why we should partner with your community"
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        className="w-full bg-white text-[#4F46E5] py-3 rounded-lg font-semibold hover:bg-white/90 transition-colors focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#4F46E5] transform hover:scale-[1.02] active:scale-[0.98] duration-200"
+                      >
+                        Submit Application
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {showConfirmation && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
+                <div className="w-full max-w-md bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] rounded-2xl shadow-xl p-6 transform transition-all animate-slideIn text-center">
+                  <div className="text-white mb-4">
+                    <i className="fas fa-check-circle text-5xl" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4">Application Submitted!</h3>
+                  <p className="text-white/80 mb-6">Thank you for your interest in partnering with us. We'll review your application and get back to you soon.</p>
+                  <button
+                    onClick={() => setShowConfirmation(false)}
+                    className="w-full bg-white text-[#4F46E5] py-3 rounded-lg font-semibold hover:bg-white/90 transition-colors focus:ring-2 focus:ring-white transform hover:scale-[1.02] active:scale-[0.98] duration-200"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </main>

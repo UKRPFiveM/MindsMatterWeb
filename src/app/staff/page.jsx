@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 
 function StaffPage() {
-  const [showBanner, setShowBanner] = useState(true);
   const [isDark, setIsDark] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -62,26 +61,7 @@ function StaffPage() {
           : "bg-gradient-to-b from-white to-gray-100 text-gray-800"
       }`}
     >
-      {/* Recruitment Banner */}
-      {showBanner && (
-        <div className="w-full bg-[#4F46E5] text-white py-4 px-0 relative">
-          <div className="w-full px-4 flex justify-between items-center">
-            <div className="flex items-center">
-              <i className="fas fa-bullhorn mr-4 text-2xl animate-pulse"></i>
-              <p className="font-bold text-lg">
-                We are recruiting staff in our Discord!<a href="https://discord.gg/w44ttXFrGK" className="underline font-bold hover:text-white/80 transition-colors ml-1">Join now</a> to apply!
-              </p>
-            </div>
-            <button 
-              onClick={() => setShowBanner(false)} 
-              className="text-white/80 hover:text-white transition-colors text-xl"
-              aria-label="Close banner"
-            >
-              <i className="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Banner removed */}
       <nav
         className={`backdrop-blur-lg ${
           isDark ? "bg-gray-800/80" : "bg-white/80"
