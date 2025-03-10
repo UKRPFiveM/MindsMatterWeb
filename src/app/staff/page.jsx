@@ -17,18 +17,18 @@ function StaffPage() {
       description: "Founder and owner of Minds Matter UK"
     },
     {
-      name: "Luppy",
-      discordName: "luppy025",
-      role: "Partnership Manager",
-      avatar: "/luppu.png",
-      description: "Manages partnerships and community relations"
-    },
-    {
       name: "Daniel",
       discordName: "beeplayzz_",
-      role: "Partnership Manager",
+      role: "Management Team",
       avatar: "/beepart.png",
-      description: "Handles outreach and new partnerships"
+      description: "Handles moderation and community management"
+    },
+    {
+      name: "Luppy",
+      discordName: "luppy025",
+      role: "Management Team",
+      avatar: "/luppu.png",
+      description: "Handles community management"
     },
     {
       name: "Connor",
@@ -36,6 +36,13 @@ function StaffPage() {
       role: "Partnership Manager",
       avatar: "/connor.png",
       description: "Handles outreach and new partnerships"
+    },
+    {
+      name: "Tubbzz",
+      discordName: "del_sys32",
+      role: "Support Team",
+      avatar: "/tubzz.png",
+      description: "Provides community support and assistance"
     },
     {
       name: "Charlie",
