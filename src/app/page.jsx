@@ -1,7 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useSearchParams } from 'next/navigation';
 
 function MainComponent() {
+  const searchParams = useSearchParams();
   const [activeSection, setActiveSection] = useState("home");
   const [isHovered, setIsHovered] = useState(false);
   const [isDark, setIsDark] = useState(false);
@@ -15,6 +17,75 @@ function MainComponent() {
     memberCount: "",
     whyPartner: ""
   });
+  
+  // Refs for each section
+  const homeRef = useRef(null);
+  const commandsRef = useRef(null);
+  const helpRef = useRef(null);
+  const partnersRef = useRef(null);
+  
+  // Function to safely scroll to an element
+  const scrollToSection = (sectionName) => {
+    setActiveSection(sectionName);
+    
+    // Use setTimeout to ensure the DOM has updated
+    setTimeout(() => {
+      let ref = null;
+      switch(sectionName) {
+        case 'home':
+          ref = homeRef.current;
+          break;
+        case 'commands':
+          ref = commandsRef.current;
+          break;
+        case 'help':
+          ref = helpRef.current;
+          break;
+        case 'partners':
+          ref = partnersRef.current;
+          break;
+        default:
+          break;
+      }
+      
+      if (ref) {
+        ref.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+  
+  // Handle section parameter from URL
+  useEffect(() => {
+    const section = searchParams.get('section');
+    if (section) {
+      setActiveSection(section);
+      // Scroll to the section after a short delay to ensure the DOM is ready
+      setTimeout(() => {
+        let ref = null;
+        switch(section) {
+          case 'home':
+            ref = homeRef.current;
+            break;
+          case 'commands':
+            ref = commandsRef.current;
+            break;
+          case 'help':
+            ref = helpRef.current;
+            break;
+          case 'partners':
+            ref = partnersRef.current;
+            break;
+          default:
+            break;
+        }
+        
+        if (ref) {
+          ref.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [searchParams]);
+  
   const partners = [
     {
       name: "London's Frontline RP",
@@ -88,6 +159,7 @@ function MainComponent() {
     { name: "Mental Health UK", url: "https://mentalhealth-uk.org" },
     { name: "Rethink Mental Illness", url: "https://www.rethink.org" },
   ];
+  
   return (
     <div
       className={`min-h-screen font-poppins ${
@@ -129,7 +201,7 @@ function MainComponent() {
                   <div className={`absolute top-full right-0 mt-1 w-48 rounded-md shadow-lg py-1 z-50 ${isDark ? 'bg-gray-800' : 'bg-white'} border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
                     <button
                       onClick={() => {
-                        setActiveSection("home");
+                        scrollToSection("home");
                         setIsDropdownOpen(false);
                       }}
                       className={`block w-full text-left px-4 py-2 text-sm ${activeSection === "home" ? "text-[#4F46E5] font-medium" : isDark ? "text-white" : "text-gray-700"}`}
@@ -138,7 +210,7 @@ function MainComponent() {
                     </button>
                     <button
                       onClick={() => {
-                        setActiveSection("commands");
+                        scrollToSection("commands");
                         setIsDropdownOpen(false);
                       }}
                       className={`block w-full text-left px-4 py-2 text-sm ${activeSection === "commands" ? "text-[#4F46E5] font-medium" : isDark ? "text-white" : "text-gray-700"}`}
@@ -147,7 +219,7 @@ function MainComponent() {
                     </button>
                     <button
                       onClick={() => {
-                        setActiveSection("help");
+                        scrollToSection("help");
                         setIsDropdownOpen(false);
                       }}
                       className={`block w-full text-left px-4 py-2 text-sm ${activeSection === "help" ? "text-[#4F46E5] font-medium" : isDark ? "text-white" : "text-gray-700"}`}
@@ -156,7 +228,7 @@ function MainComponent() {
                     </button>
                     <button
                       onClick={() => {
-                        setActiveSection("partners");
+                        scrollToSection("partners");
                         setIsDropdownOpen(false);
                       }}
                       className={`block w-full text-left px-4 py-2 text-sm ${activeSection === "partners" ? "text-[#4F46E5] font-medium" : isDark ? "text-white" : "text-gray-700"}`}
@@ -192,7 +264,7 @@ function MainComponent() {
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
               <button
-                onClick={() => setActiveSection("home")}
+                onClick={() => scrollToSection("home")}
                 className={`px-4 py-2 rounded-lg transition-all ${
                   activeSection === "home"
                     ? "bg-[#4F46E5]/10 text-[#4F46E5]"
@@ -204,7 +276,7 @@ function MainComponent() {
                 Home
               </button>
               <button
-                onClick={() => setActiveSection("commands")}
+                onClick={() => scrollToSection("commands")}
                 className={`px-4 py-2 rounded-lg transition-all ${activeSection === "commands"
                     ? "bg-[#4F46E5]/10 text-[#4F46E5]"
                     : isDark
@@ -215,7 +287,7 @@ function MainComponent() {
                 Commands
               </button>
               <button
-                onClick={() => setActiveSection("help")}
+                onClick={() => scrollToSection("help")}
                 className={`px-4 py-2 rounded-lg transition-all ${activeSection === "help"
                     ? "bg-[#4F46E5]/10 text-[#4F46E5]"
                     : isDark
@@ -226,7 +298,7 @@ function MainComponent() {
                 Get Help
               </button>
               <button
-                onClick={() => setActiveSection("partners")}
+                onClick={() => scrollToSection("partners")}
                 className={`px-4 py-2 rounded-lg transition-all ${activeSection === "partners"
                     ? "bg-[#4F46E5]/10 text-[#4F46E5]"
                     : isDark
@@ -265,7 +337,7 @@ function MainComponent() {
               <div className="flex flex-col space-y-2">
                 <button
                   onClick={() => {
-                    setActiveSection("home");
+                    scrollToSection("home");
                     setIsMobileMenuOpen(false);
                   }}
                   className={`px-4 py-2 rounded-lg transition-all ${
@@ -280,7 +352,7 @@ function MainComponent() {
                 </button>
                 <button
                   onClick={() => {
-                    setActiveSection("commands");
+                    scrollToSection("commands");
                     setIsMobileMenuOpen(false);
                   }}
                   className={`px-4 py-2 rounded-lg transition-all ${
@@ -295,7 +367,7 @@ function MainComponent() {
                 </button>
                 <button
                   onClick={() => {
-                    setActiveSection("help");
+                    scrollToSection("help");
                     setIsMobileMenuOpen(false);
                   }}
                   className={`px-4 py-2 rounded-lg transition-all ${
@@ -310,7 +382,7 @@ function MainComponent() {
                 </button>
                 <button
                   onClick={() => {
-                    setActiveSection("partners");
+                    scrollToSection("partners");
                     setIsMobileMenuOpen(false);
                   }}
                   className={`px-4 py-2 rounded-lg transition-all ${
@@ -356,7 +428,7 @@ function MainComponent() {
 
 
         {activeSection === "home" && (
-          <div className="text-center space-y-12 animate-[fadeIn_1s_ease-out]">
+          <div ref={homeRef} id="home" className="text-center space-y-12 animate-[fadeIn_1s_ease-out]">
             <div className="max-w-4xl mx-auto space-y-6">
               <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] text-transparent bg-clip-text">
                 Welcome to Minds Matter

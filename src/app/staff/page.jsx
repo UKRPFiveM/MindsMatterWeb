@@ -1,11 +1,18 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from 'next/navigation';
 
 function StaffPage() {
   const [isDark, setIsDark] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("staff");
+  const router = useRouter();
+  
+  // Function to handle navigation to home page sections
+  const navigateToSection = (section) => {
+    router.push(`/?section=${section}`);
+  };
   
   // Staff members data
   const staffMembers = [
@@ -98,30 +105,30 @@ function StaffPage() {
                 
                 {isDropdownOpen && (
                   <div className={`absolute top-full right-0 mt-1 w-48 rounded-md shadow-lg py-1 z-50 ${isDark ? 'bg-gray-800' : 'bg-white'} border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-                    <a
-                      href="/"
+                    <button
+                      onClick={() => navigateToSection("home")}
                       className={`block w-full text-left px-4 py-2 text-sm ${activeSection === "home" ? "text-[#4F46E5] font-medium" : isDark ? "text-white" : "text-gray-700"}`}
                     >
                       Home
-                    </a>
-                    <a
-                      href="/#commands"
+                    </button>
+                    <button
+                      onClick={() => navigateToSection("commands")}
                       className={`block w-full text-left px-4 py-2 text-sm ${activeSection === "commands" ? "text-[#4F46E5] font-medium" : isDark ? "text-white" : "text-gray-700"}`}
                     >
                       Commands
-                    </a>
-                    <a
-                      href="/#help"
+                    </button>
+                    <button
+                      onClick={() => navigateToSection("help")}
                       className={`block w-full text-left px-4 py-2 text-sm ${activeSection === "help" ? "text-[#4F46E5] font-medium" : isDark ? "text-white" : "text-gray-700"}`}
                     >
                       Get Help
-                    </a>
-                    <a
-                      href="/#partners"
+                    </button>
+                    <button
+                      onClick={() => navigateToSection("partners")}
                       className={`block w-full text-left px-4 py-2 text-sm ${activeSection === "partners" ? "text-[#4F46E5] font-medium" : isDark ? "text-white" : "text-gray-700"}`}
                     >
                       Partners
-                    </a>
+                    </button>
                     <a
                       href="/staff"
                       className={`block w-full text-left px-4 py-2 text-sm ${activeSection === "staff" ? "text-[#4F46E5] font-medium" : isDark ? "text-white" : "text-gray-700"}`}
@@ -150,8 +157,8 @@ function StaffPage() {
             </div>
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <a
-                href="/"
+              <button
+                onClick={() => navigateToSection("home")}
                 className={`px-4 py-2 rounded-lg transition-all ${
                   activeSection === "home"
                     ? "bg-[#4F46E5]/10 text-[#4F46E5]"
@@ -161,9 +168,9 @@ function StaffPage() {
                 }`}
               >
                 Home
-              </a>
-              <a
-                href="/#commands"
+              </button>
+              <button
+                onClick={() => navigateToSection("commands")}
                 className={`px-4 py-2 rounded-lg transition-all ${activeSection === "commands"
                     ? "bg-[#4F46E5]/10 text-[#4F46E5]"
                     : isDark
@@ -172,9 +179,9 @@ function StaffPage() {
                 }`}
               >
                 Commands
-              </a>
-              <a
-                href="/#help"
+              </button>
+              <button
+                onClick={() => navigateToSection("help")}
                 className={`px-4 py-2 rounded-lg transition-all ${activeSection === "help"
                     ? "bg-[#4F46E5]/10 text-[#4F46E5]"
                     : isDark
@@ -183,9 +190,9 @@ function StaffPage() {
                 }`}
               >
                 Get Help
-              </a>
-              <a
-                href="/#partners"
+              </button>
+              <button
+                onClick={() => navigateToSection("partners")}
                 className={`px-4 py-2 rounded-lg transition-all ${activeSection === "partners"
                     ? "bg-[#4F46E5]/10 text-[#4F46E5]"
                     : isDark
@@ -194,7 +201,7 @@ function StaffPage() {
                 }`}
               >
                 Partners
-              </a>
+              </button>
               <a
                 href="/staff"
                 className={`px-4 py-2 rounded-lg transition-all ${activeSection === "staff"
@@ -222,8 +229,8 @@ function StaffPage() {
           {isMobileMenuOpen && (
             <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
               <div className="flex flex-col space-y-2">
-                <a
-                  href="/"
+                <button
+                  onClick={() => navigateToSection("home")}
                   className={`px-4 py-2 rounded-lg transition-all ${
                     activeSection === "home"
                       ? "bg-[#4F46E5]/10 text-[#4F46E5]"
@@ -233,9 +240,9 @@ function StaffPage() {
                   }`}
                 >
                   Home
-                </a>
-                <a
-                  href="/#commands"
+                </button>
+                <button
+                  onClick={() => navigateToSection("commands")}
                   className={`px-4 py-2 rounded-lg transition-all ${
                     activeSection === "commands"
                       ? "bg-[#4F46E5]/10 text-[#4F46E5]"
@@ -245,9 +252,9 @@ function StaffPage() {
                   }`}
                 >
                   Commands
-                </a>
-                <a
-                  href="/#help"
+                </button>
+                <button
+                  onClick={() => navigateToSection("help")}
                   className={`px-4 py-2 rounded-lg transition-all ${
                     activeSection === "help"
                       ? "bg-[#4F46E5]/10 text-[#4F46E5]"
@@ -257,9 +264,9 @@ function StaffPage() {
                   }`}
                 >
                   Get Help
-                </a>
-                <a
-                  href="/#partners"
+                </button>
+                <button
+                  onClick={() => navigateToSection("partners")}
                   className={`px-4 py-2 rounded-lg transition-all ${
                     activeSection === "partners"
                       ? "bg-[#4F46E5]/10 text-[#4F46E5]"
@@ -269,7 +276,7 @@ function StaffPage() {
                   }`}
                 >
                   Partners
-                </a>
+                </button>
                 <a
                   href="/staff"
                   className={`px-4 py-2 rounded-lg transition-all ${
