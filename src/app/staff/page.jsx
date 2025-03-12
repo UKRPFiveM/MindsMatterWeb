@@ -9,9 +9,9 @@ function StaffPage() {
   const [activeSection, setActiveSection] = useState("staff");
   const router = useRouter();
   
-  // Load dark mode preference from localStorage on component mount
+
   useEffect(() => {
-    // Add a small delay to ensure smooth transition
+
     const timer = setTimeout(() => {
       const storedDarkMode = localStorage.getItem('darkMode');
       if (storedDarkMode !== null) {
@@ -22,19 +22,19 @@ function StaffPage() {
     return () => clearTimeout(timer);
   }, []);
   
-  // Update localStorage when dark mode changes
+
   const toggleDarkMode = () => {
     const newDarkMode = !isDark;
     setIsDark(newDarkMode);
     localStorage.setItem('darkMode', newDarkMode.toString());
   };
   
-  // Function to handle navigation to home page sections with smooth transition
+
   const navigateToSection = (section) => {
-    // Store the last visited section in localStorage for persistence
+
     localStorage.setItem('lastSection', section);
     
-    // Add a fade-out effect before navigation
+
     document.body.style.opacity = '0.5';
     document.body.style.transition = 'opacity 150ms';
     
@@ -43,7 +43,7 @@ function StaffPage() {
     }, 150);
   };
   
-  // Staff members data
+
   const staffMembers = [
     {
       name: "Jack",
@@ -96,7 +96,7 @@ function StaffPage() {
     }
   ];
 
-  // Add a fade-in effect when the component mounts
+
   useEffect(() => {
     document.body.style.opacity = '1';
     document.body.style.transition = 'opacity 300ms';

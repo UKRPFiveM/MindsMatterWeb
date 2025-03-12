@@ -7,8 +7,7 @@ function MainComponent() {
   const router = useRouter();
   const [activeSection, setActiveSection] = useState("home");
   const [isHovered, setIsHovered] = useState(false);
-  // Setting isDark to false (light mode) and removing the state entirely
-  const isDark = false; // Fixed value instead of state
+  const isDark = false; 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showPartnerModal, setShowPartnerModal] = useState(false);
@@ -20,15 +19,13 @@ function MainComponent() {
     whyPartner: ""
   });
   
-  // Refs for each section
+
   const homeRef = useRef(null);
   const commandsRef = useRef(null);
   const helpRef = useRef(null);
   const partnersRef = useRef(null);
   
-  // Removing dark mode related useEffect
-  
-  // Add fade-in effect when component mounts
+
   useEffect(() => {
     document.body.style.opacity = '1';
     document.body.style.transition = 'opacity 300ms';
@@ -39,25 +36,24 @@ function MainComponent() {
     };
   }, []);
   
-  // Removing toggleDarkMode function
+
   
-  // Function to safely scroll to an element and update URL
+
   const scrollToSection = (sectionName) => {
     setActiveSection(sectionName);
-    // Store the current section in localStorage for persistence
+
     localStorage.setItem('lastSection', sectionName);
     
-    // Update URL without full page reload
+
     if (sectionName === 'home') {
-      // For home section, remove the section parameter entirely
       router.push('/', { scroll: false });
     } else {
       router.push(`/?section=${sectionName}`, { scroll: false });
     }
     
-    // Only scroll if not the home section
+
     if (sectionName !== 'home') {
-      // Use setTimeout to ensure the DOM has updated
+
       setTimeout(() => {
         let ref = null;
         switch(sectionName) {
@@ -81,18 +77,17 @@ function MainComponent() {
     }
   };
   
-  // Handle section parameter from URL and restore last section on page load
+
   useEffect(() => {
-    // First check URL parameter
+
     const section = searchParams.get('section');
     if (section) {
-      // Set active section immediately to prevent flashing home content
+
       setActiveSection(section);
       
-      // Hide all sections initially
+
       document.body.style.opacity = '0';
       
-      // Scroll to the section after a short delay to ensure the DOM is ready
       setTimeout(() => {
         let ref = null;
         switch(section) {
@@ -110,18 +105,17 @@ function MainComponent() {
         }
         
         if (ref) {
-          // Use instant scroll instead of smooth for initial load
+
           ref.scrollIntoView({ behavior: 'auto' });
         }
         
-        // Show content after scrolling
         document.body.style.opacity = '1';
         document.body.style.transition = 'opacity 300ms';
       }, 0);
     }
   }, [searchParams]);
   
-  // Add fade-in effect when component mounts, but only if no section parameter
+
   useEffect(() => {
     const section = searchParams.get('section');
     if (!section) {
@@ -133,7 +127,7 @@ function MainComponent() {
       document.body.style.transition = '';
     };
   }, [searchParams]);
-    // Removed the else block that was checking localStorage and redirecting to home
+
 
   
   const partners = [
@@ -348,7 +342,6 @@ function MainComponent() {
                 href="/staff"
                 onClick={(e) => {
                   e.preventDefault();
-                  // Add a fade-out effect before navigation
                   document.body.style.opacity = '0.5';
                   document.body.style.transition = 'opacity 150ms';
                   
@@ -437,7 +430,6 @@ function MainComponent() {
                   href="/staff"
                   onClick={(e) => {
                     e.preventDefault();
-                    // Add a fade-out effect before navigation
                     document.body.style.opacity = '0.5';
                     document.body.style.transition = 'opacity 150ms';
                     
@@ -518,7 +510,7 @@ function MainComponent() {
                 className="animate-[float_3s_ease-in-out_infinite]"
               >
                 <a
-                  href="https://discord.gg/w44ttXFrGK" // Replace with your actual invite link
+                  href="https://discord.gg/w44ttXFrGK" 
                   className={`bg-[#4F46E5] hover:bg-[#4338CA] px-8 py-4 rounded-xl text-white font-bold text-lg inline-flex items-center space-x-3 shadow-lg hover:shadow-[#4F46E5]/20 transition-all ${
                     isHovered ? "scale-105" : ""
                   }`}
@@ -767,10 +759,9 @@ function MainComponent() {
                     <form className="space-y-4" onSubmit={async (e) => {
                       e.preventDefault();
                       
-                      // Discord webhook URL
                       const webhookUrl = "https://discord.com/api/webhooks/1348010717277720617/ubzf0qsOAuAXMnbU7giF21_4BWt5amCaoWrSe9pV7hOPC9JqXcI1IR-vJULkBJXqdVN4";
                       
-                      // Create embed for Discord webhook
+                 
                       const embed = {
                         title: "New Partnership Application",
                         color: 5165349, // #4F46E5 in decimal
@@ -797,7 +788,7 @@ function MainComponent() {
                         timestamp: new Date().toISOString()
                       };
                       
-                      // Send data to Discord webhook
+                  
                       try {
                         await fetch(webhookUrl, {
                           method: 'POST',

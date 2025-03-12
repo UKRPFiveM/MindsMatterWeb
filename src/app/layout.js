@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="icon" href="/logo.svg" />
-        {/* Script to prevent dark mode flash */}
+        {}
         <script dangerouslySetInnerHTML={{
           __html: `
             (function() {

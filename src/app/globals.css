@@ -102,15 +102,15 @@ button:focus-visible {
 }
 
 
-/* Add this to the end of your globals.css file */
 
-/* Dark mode class for early application */
+
+
 html.dark-mode {
-  background-color: #111827; /* bg-gray-900 */
+  background-color: #111827;
   color: white;
 }
 
-/* Page transition animation */
+
 .page-transition-enter {
   opacity: 0;
 }
