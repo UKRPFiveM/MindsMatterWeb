@@ -1,12 +1,14 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 function MainComponent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [activeSection, setActiveSection] = useState("home");
   const [isHovered, setIsHovered] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  // Setting isDark to false (light mode) and removing the state entirely
+  const isDark = false; // Fixed value instead of state
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showPartnerModal, setShowPartnerModal] = useState(false);
@@ -24,48 +26,41 @@ function MainComponent() {
   const helpRef = useRef(null);
   const partnersRef = useRef(null);
   
-  // Function to safely scroll to an element
+  // Removing dark mode related useEffect
+  
+  // Add fade-in effect when component mounts
+  useEffect(() => {
+    document.body.style.opacity = '1';
+    document.body.style.transition = 'opacity 300ms';
+    
+    return () => {
+      document.body.style.opacity = '1';
+      document.body.style.transition = '';
+    };
+  }, []);
+  
+  // Removing toggleDarkMode function
+  
+  // Function to safely scroll to an element and update URL
   const scrollToSection = (sectionName) => {
     setActiveSection(sectionName);
+    // Store the current section in localStorage for persistence
+    localStorage.setItem('lastSection', sectionName);
     
-    // Use setTimeout to ensure the DOM has updated
-    setTimeout(() => {
-      let ref = null;
-      switch(sectionName) {
-        case 'home':
-          ref = homeRef.current;
-          break;
-        case 'commands':
-          ref = commandsRef.current;
-          break;
-        case 'help':
-          ref = helpRef.current;
-          break;
-        case 'partners':
-          ref = partnersRef.current;
-          break;
-        default:
-          break;
-      }
-      
-      if (ref) {
-        ref.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  };
-  
-  // Handle section parameter from URL
-  useEffect(() => {
-    const section = searchParams.get('section');
-    if (section) {
-      setActiveSection(section);
-      // Scroll to the section after a short delay to ensure the DOM is ready
+    // Update URL without full page reload
+    if (sectionName === 'home') {
+      // For home section, remove the section parameter entirely
+      router.push('/', { scroll: false });
+    } else {
+      router.push(`/?section=${sectionName}`, { scroll: false });
+    }
+    
+    // Only scroll if not the home section
+    if (sectionName !== 'home') {
+      // Use setTimeout to ensure the DOM has updated
       setTimeout(() => {
         let ref = null;
-        switch(section) {
-          case 'home':
-            ref = homeRef.current;
-            break;
+        switch(sectionName) {
           case 'commands':
             ref = commandsRef.current;
             break;
@@ -84,7 +79,41 @@ function MainComponent() {
         }
       }, 100);
     }
-  }, [searchParams]);
+  };
+  
+  // Handle section parameter from URL and restore last section on page load
+  useEffect(() => {
+    // First check URL parameter
+    const section = searchParams.get('section');
+    if (section) {
+      setActiveSection(section);
+      // Scroll to the section after a short delay to ensure the DOM is ready
+      // Only scroll if not the home section
+      if (section !== 'home') {
+        setTimeout(() => {
+          let ref = null;
+          switch(section) {
+            case 'commands':
+              ref = commandsRef.current;
+              break;
+            case 'help':
+              ref = helpRef.current;
+              break;
+            case 'partners':
+              ref = partnersRef.current;
+              break;
+            default:
+              break;
+          }
+          
+          if (ref) {
+            ref.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
+    }
+    // Removed the else block that was checking localStorage and redirecting to home
+  }, [searchParams, router]);
   
   const partners = [
     {
@@ -245,21 +274,7 @@ function MainComponent() {
                 )}
               </div>
               
-              <button
-                onClick={() => setIsDark(!isDark)}
-                className={`p-2 rounded-lg transition-all ${isDark ? "text-yellow-400" : "text-gray-600"}`}
-                aria-label="Toggle dark mode"
-              >
-                <i className={`fas ${isDark ? "fa-sun" : "fa-moon"}`} />
-              </button>
-              
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 rounded-lg transition-all text-gray-600 hover:text-gray-800"
-                aria-label="Toggle menu"
-              >
-                <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'} text-xl`} />
-              </button>
+              {/* Removing dark mode button and hamburger menu button */}
             </div>
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
@@ -310,6 +325,16 @@ function MainComponent() {
               </button>
               <a
                 href="/staff"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Add a fade-out effect before navigation
+                  document.body.style.opacity = '0.5';
+                  document.body.style.transition = 'opacity 150ms';
+                  
+                  setTimeout(() => {
+                    router.push('/staff');
+                  }, 150);
+                }}
                 className={`px-4 py-2 rounded-lg transition-all ${activeSection === "staff"
                     ? "bg-[#4F46E5]/10 text-[#4F46E5]"
                     : isDark
@@ -319,16 +344,7 @@ function MainComponent() {
               >
                 Staff
               </a>
-              <button
-                onClick={() => setIsDark(!isDark)}
-                className={`p-2 rounded-lg transition-all ${
-                  isDark
-                    ? "text-yellow-400 hover:text-yellow-300"
-                    : "text-gray-600 hover:text-gray-800"
-                }`}
-              >
-                <i className={`fas ${isDark ? "fa-sun" : "fa-moon"}`} />
-              </button>
+              {/* Removing dark mode toggle button */}
             </div>
           </div>
           {/* Mobile Menu */}
@@ -395,8 +411,19 @@ function MainComponent() {
                 >
                   Partners
                 </button>
+                {/* Staff link with smooth transition */}
                 <a
                   href="/staff"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // Add a fade-out effect before navigation
+                    document.body.style.opacity = '0.5';
+                    document.body.style.transition = 'opacity 150ms';
+                    
+                    setTimeout(() => {
+                      router.push('/staff');
+                    }, 150);
+                  }}
                   className={`px-4 py-2 rounded-lg transition-all ${
                     activeSection === "staff"
                       ? "bg-[#4F46E5]/10 text-[#4F46E5]"
@@ -407,6 +434,8 @@ function MainComponent() {
                 >
                   Staff
                 </a>
+                
+                {/* Dark mode toggle button */}
                 <button
                   onClick={() => setIsDark(!isDark)}
                   className={`px-4 py-2 rounded-lg transition-all flex items-center ${

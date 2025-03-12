@@ -17,6 +17,23 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="icon" href="/logo.svg" />
+        {/* Script to prevent dark mode flash */}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              try {
+                const storedDarkMode = localStorage.getItem('darkMode');
+                if (storedDarkMode === 'true') {
+                  document.documentElement.classList.add('dark-mode');
+                  document.body.classList.add('bg-gray-900');
+                  document.body.classList.add('text-white');
+                }
+              } catch (e) {
+                console.error('Error accessing localStorage:', e);
+              }
+            })();
+          `
+        }} />
       </head>
       <body className={inter.className}>{children}</body>
     </html>

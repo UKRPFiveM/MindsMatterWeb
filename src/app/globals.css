@@ -100,3 +100,31 @@ button:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+
+/* Add this to the end of your globals.css file */
+
+/* Dark mode class for early application */
+html.dark-mode {
+  background-color: #111827; /* bg-gray-900 */
+  color: white;
+}
+
+/* Page transition animation */
+.page-transition-enter {
+  opacity: 0;
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
