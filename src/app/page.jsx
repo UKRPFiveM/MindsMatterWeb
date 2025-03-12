@@ -575,7 +575,7 @@ function MainComponent() {
 
         {activeSection === "commands" && (
           <div className="space-y-8 animate-fadeIn">
-            <h2 className="text-3xl font-bold text-center mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] text-transparent bg-clip-text text-center mb-8">
               Bot Commands
             </h2>
             {Object.entries(commands).map(([category, cmds]) => (
@@ -618,7 +618,7 @@ function MainComponent() {
 
         {activeSection === "help" && (
           <div className="space-y-8 animate-fadeIn">
-            <h2 className="text-3xl font-bold text-center mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] text-transparent bg-clip-text text-center mb-8">
               Mental Health Resources
             </h2>
 
@@ -690,11 +690,11 @@ function MainComponent() {
 
         {activeSection === "partners" && (
           <div className="space-y-8 animate-fadeIn">
-            <h2 className="text-3xl font-bold text-center mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] text-transparent bg-clip-text text-center mb-8">
               Our Partners
             </h2>
             <p className="text-center text-lg mb-10 max-w-3xl mx-auto">
-            We're proud to partner with these communities that support those struggling with mental health.
+            We're proud to partner with these communities that support Minds Matter.
             </p>
             
             <div className="grid md:grid-cols-3 gap-8">
