@@ -86,34 +86,55 @@ function MainComponent() {
     // First check URL parameter
     const section = searchParams.get('section');
     if (section) {
+      // Set active section immediately to prevent flashing home content
       setActiveSection(section);
+      
+      // Hide all sections initially
+      document.body.style.opacity = '0';
+      
       // Scroll to the section after a short delay to ensure the DOM is ready
-      // Only scroll if not the home section
-      if (section !== 'home') {
-        setTimeout(() => {
-          let ref = null;
-          switch(section) {
-            case 'commands':
-              ref = commandsRef.current;
-              break;
-            case 'help':
-              ref = helpRef.current;
-              break;
-            case 'partners':
-              ref = partnersRef.current;
-              break;
-            default:
-              break;
-          }
-          
-          if (ref) {
-            ref.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 100);
-      }
+      setTimeout(() => {
+        let ref = null;
+        switch(section) {
+          case 'commands':
+            ref = commandsRef.current;
+            break;
+          case 'help':
+            ref = helpRef.current;
+            break;
+          case 'partners':
+            ref = partnersRef.current;
+            break;
+          default:
+            break;
+        }
+        
+        if (ref) {
+          // Use instant scroll instead of smooth for initial load
+          ref.scrollIntoView({ behavior: 'auto' });
+        }
+        
+        // Show content after scrolling
+        document.body.style.opacity = '1';
+        document.body.style.transition = 'opacity 300ms';
+      }, 0);
     }
+  }, [searchParams]);
+  
+  // Add fade-in effect when component mounts, but only if no section parameter
+  useEffect(() => {
+    const section = searchParams.get('section');
+    if (!section) {
+      document.body.style.opacity = '1';
+      document.body.style.transition = 'opacity 300ms';
+    }
+    
+    return () => {
+      document.body.style.transition = '';
+    };
+  }, [searchParams]);
     // Removed the else block that was checking localStorage and redirecting to home
-  }, [searchParams, router]);
+
   
   const partners = [
     {
