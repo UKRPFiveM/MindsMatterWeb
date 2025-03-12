@@ -19,6 +19,9 @@ function MainComponent() {
     whyPartner: ""
   });
   
+  // Command filtering and display state
+  const [activeCommandCategory, setActiveCommandCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const homeRef = useRef(null);
   const commandsRef = useRef(null);
@@ -36,24 +39,18 @@ function MainComponent() {
     };
   }, []);
   
-
-  
-
   const scrollToSection = (sectionName) => {
     setActiveSection(sectionName);
 
     localStorage.setItem('lastSection', sectionName);
     
-
     if (sectionName === 'home') {
       router.push('/', { scroll: false });
     } else {
       router.push(`/?section=${sectionName}`, { scroll: false });
     }
     
-
     if (sectionName !== 'home') {
-
       setTimeout(() => {
         let ref = null;
         switch(sectionName) {
@@ -77,15 +74,11 @@ function MainComponent() {
     }
   };
   
-
   useEffect(() => {
-
     const section = searchParams.get('section');
     if (section) {
-
       setActiveSection(section);
       
-
       document.body.style.opacity = '0';
       
       setTimeout(() => {
@@ -105,7 +98,6 @@ function MainComponent() {
         }
         
         if (ref) {
-
           ref.scrollIntoView({ behavior: 'auto' });
         }
         
@@ -115,7 +107,6 @@ function MainComponent() {
     }
   }, [searchParams]);
   
-
   useEffect(() => {
     const section = searchParams.get('section');
     if (!section) {
@@ -128,28 +119,7 @@ function MainComponent() {
     };
   }, [searchParams]);
 
-
-  
-  const partners = [
-    {
-      name: "London's Frontline RP",
-      logo: "/LFRP_Logo.png",
-      invite: "https://discord.gg/E276UvPTBm",
-      description: "A returning FiveM community called London's Frontline Roleplay"
-    },
-    {
-      name: "Blake's Community",
-      logo: "/blake.png",
-      invite: "https://discord.gg/SqPKkBxWhc",
-      description: "A streaming community where you can make friends that last. "
-    },
-    {
-      name: "BeePlayzz_ Hangout",
-      logo: "/bee.png",
-      invite: "https://discord.gg/jBjw2S6D2A",
-      description: "A streaming community where you can hangout and make friends."
-    }
-  ];
+  // Command configuration
   const commands = {
     "Mental Health Support": [
       {
@@ -178,8 +148,38 @@ function MainComponent() {
         name: "/gratitude",
         desc: "Log something you are grateful for to boost your mood",
       },
+      {
+        name: "/moodtracker",
+        desc: "Track your mood over time and receive insights",
+      }
     ],
-    General: [
+    "Games": [
+      {
+        name: "/trivia",
+        desc: "Play a mental health trivia game to test your knowledge",
+      },
+      {
+        name: "/wordassociation",
+        desc: "Play a word association game related to positive emotions",
+      },
+      {
+        name: "/mentalmaths",
+        desc: "Play a mental math game to test your mental calculation skills",
+      },
+      {
+        name: "/riddle",
+        desc: "Solve a mental riddle to test your logic skills",
+      },
+      {
+        name: "/unscramble",
+        desc: "Unscramble a word to test your vocabulary skills",
+      },
+      {
+        name: "/bubblewrap",
+        desc: "Pop bubblewrap"
+      }
+    ],
+    "General": [
       {
         name: "/help",
         desc: "Lists all available commands and their descriptions",
@@ -188,9 +188,54 @@ function MainComponent() {
         name: "/about",
         desc: "Learn about the Minds Matter bot and its creator",
       },
-      { name: "/randomfact", desc: "Get a random fact to brighten your day" },
+      { 
+        name: "/randomfact", 
+        desc: "Get a random fact to brighten your day" 
+      },
     ],
   };
+  
+  // Filter commands based on search and category
+  const getFilteredCommands = () => {
+    let filteredCommands = {};
+    
+    Object.keys(commands).forEach(category => {
+      if (activeCommandCategory === "all" || activeCommandCategory === category) {
+        const categoryCommands = commands[category].filter(cmd => 
+          cmd.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          cmd.desc.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        
+        if (categoryCommands.length > 0) {
+          filteredCommands[category] = categoryCommands;
+        }
+      }
+    });
+    
+    return filteredCommands;
+  };
+  
+  const partners = [
+    {
+      name: "London's Frontline RP",
+      logo: "/LFRP_Logo.png",
+      invite: "https://discord.gg/E276UvPTBm",
+      description: "A returning FiveM community called London's Frontline Roleplay"
+    },
+    {
+      name: "Blake's Community",
+      logo: "/blake.png",
+      invite: "https://discord.gg/SqPKkBxWhc",
+      description: "A streaming community where you can make friends that last. "
+    },
+    {
+      name: "BeePlayzz_ Hangout",
+      logo: "/bee.png",
+      invite: "https://discord.gg/jBjw2S6D2A",
+      description: "A streaming community where you can hangout and make friends."
+    }
+  ];
+  
   const helplines = [
     { name: "Samaritans", number: "116 123", available: "24/7" },
     { name: "Mind", number: "0300 123 3393", available: "Mon-Fri 9am-6pm" },
@@ -570,41 +615,172 @@ function MainComponent() {
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] text-transparent bg-clip-text text-center mb-8">
               Bot Commands
             </h2>
-            {Object.entries(commands).map(([category, cmds]) => (
-              <div
-                key={category}
-                className={`${
-                  isDark ? "bg-gray-800" : "bg-white"
-                } rounded-lg p-6 shadow-sm hover:transform hover:scale-[1.01] transition-transform border ${
-                  isDark ? "border-gray-700" : "border-gray-200"
-                }`}
-              >
-                <h3 className="text-xl font-bold mb-4 text-[#4F46E5]">
-                  {category}
-                </h3>
-                <div className="grid gap-4">
-                  {cmds.map((cmd) => (
-                    <div
-                      key={cmd.name}
-                      className={`${
-                        isDark ? "bg-gray-700" : "bg-gray-50"
-                      } p-4 rounded-lg border ${
-                        isDark ? "border-gray-600" : "border-gray-100"
-                      }`}
-                    >
-                      <div className="font-mono text-[#4F46E5]">{cmd.name}</div>
-                      <div
-                        className={
-                          isDark ? "text-gray-300 mt-1" : "text-gray-600 mt-1"
-                        }
-                      >
-                        {cmd.desc}
-                      </div>
+            
+            {/* Search and filter controls */}
+            <div className={`${isDark ? "bg-gray-800" : "bg-white"} rounded-lg p-6 shadow-sm border ${isDark ? "border-gray-700" : "border-gray-200"} mb-6`}>
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex-1">
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <i className="fas fa-search text-gray-400"></i>
                     </div>
-                  ))}
+                    <input
+                      type="text"
+                      className={`block w-full pl-10 pr-3 py-2 border ${isDark ? "bg-gray-700 border-gray-600 text-white" : "bg-white border-gray-300"} rounded-md focus:outline-none focus:ring-2 focus:ring-[#4F46E5]`}
+                      placeholder="Search commands..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex-shrink-0">
+                  <select
+                    className={`block w-full px-3 py-2 border ${isDark ? "bg-gray-700 border-gray-600 text-white" : "bg-white border-gray-300"} rounded-md focus:outline-none focus:ring-2 focus:ring-[#4F46E5]`}
+                    value={activeCommandCategory}
+                    onChange={(e) => setActiveCommandCategory(e.target.value)}
+                  >
+                    <option value="all">All Categories</option>
+                    {Object.keys(commands).map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
-            ))}
+            </div>
+            
+            {/* Command cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Object.entries(getFilteredCommands()).map(([category, cmds]) => (
+                cmds.map((cmd) => (
+                  <div
+                    key={`${category}-${cmd.name}`}
+                    className={`${
+                      isDark ? "bg-gray-800" : "bg-white"
+                    } rounded-lg p-5 shadow-md hover:shadow-lg border ${
+                      isDark ? "border-gray-700" : "border-gray-200"
+                    } transition-all duration-300 hover:border-[#4F46E5] transform hover:translate-y-[-2px]`}
+                  >
+                    <div className="flex items-start">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        category === "Mental Health Support" ? "bg-red-100" :
+                        category === "Wellness Tools" ? "bg-green-100" :
+                        category === "Games" ? "bg-yellow-100" : "bg-blue-100"
+                      }`}>
+                        <i className={`fas ${
+                          category === "Mental Health Support" ? "fa-heart" :
+                          category === "Wellness Tools" ? "fa-leaf" :
+                          category === "Games" ? "fa-gamepad" : "fa-cog"
+                        } ${
+                          category === "Mental Health Support" ? "text-red-500" :
+                          category === "Wellness Tools" ? "text-green-500" :
+                          category === "Games" ? "text-yellow-500" : "text-blue-500"
+                        }`}></i>
+                      </div>
+                      <div className="ml-4 flex-1">
+                        <div className="flex justify-between items-start">
+                          <h3 className="font-mono text-lg font-semibold text-[#4F46E5]">{cmd.name}</h3>
+                          <span className={`text-xs px-2 py-1 rounded-full ${
+                            category === "Mental Health Support" ? "bg-red-100 text-red-800" :
+                            category === "Wellness Tools" ? "bg-green-100 text-green-800" :
+                            category === "Games" ? "bg-yellow-100 text-yellow-800" : "bg-blue-100 text-blue-800"
+                          }`}>
+                            {category}
+                          </span>
+                        </div>
+                        <p className={`mt-2 ${isDark ? "text-gray-300" : "text-gray-600"}`}>
+                          {cmd.desc}
+                        </p>
+                        <div className="mt-3 pt-3 border-t border-dashed border-gray-200 flex justify-end">
+                          <button 
+                            className="text-sm text-[#4F46E5] hover:text-[#4338CA] transition-colors"
+                            onClick={() => {
+                              // Copy command to clipboard
+                              navigator.clipboard.writeText(cmd.name);
+                              // You could add a toast notification here
+                            }}
+                          >
+                            <i className="far fa-copy mr-1"></i> Copy
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ))}
+            </div>
+            
+            {/* No results message */}
+            {Object.keys(getFilteredCommands()).length === 0 && (
+              <div className={`${isDark ? "bg-gray-800" : "bg-white"} rounded-lg p-8 shadow-sm border ${isDark ? "border-gray-700" : "border-gray-200"} text-center`}>
+                <i className="fas fa-search text-4xl text-gray-400 mb-4"></i>
+                <h3 className="text-xl font-semibold mb-2">No commands found</h3>
+                <p className={isDark ? "text-gray-400" : "text-gray-600"}>
+                  Try adjusting your search or filter to find what you're looking for.
+                </p>
+                <button
+                  onClick={() => {
+                    setSearchQuery("");
+                    setActiveCommandCategory("all");
+                  }}
+                  className="mt-4 px-4 py-2 bg-[#4F46E5] text-white rounded-lg hover:bg-[#4338CA] transition-colors"
+                >
+                  Reset Filters
+                </button>
+              </div>
+            )}
+            
+            {/* Command categories explanation */}
+            <div className={`${isDark ? "bg-gray-800" : "bg-gray-50"} rounded-lg p-6 mt-8 border ${isDark ? "border-gray-700" : "border-gray-200"}`}>
+              <h3 className="text-lg font-semibold mb-4">Command Categories</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                    <i className="fas fa-heart text-red-500"></i>
+                  </div>
+                  <div className="ml-3">
+                    <h4 className="font-medium">Mental Health Support</h4>
+                    <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+                      Emergency resources and support contacts
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                    <i className="fas fa-leaf text-green-500"></i>
+                  </div>
+                  <div className="ml-3">
+                    <h4 className="font-medium">Wellness Tools</h4>
+                    <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+                      Tools to help maintain daily mental wellness
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
+                    <i className="fas fa-gamepad text-yellow-500"></i>
+                  </div>
+                  <div className="ml-3">
+                    <h4 className="font-medium">Games</h4>
+                    <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+                      Fun activities to boost your mood
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                    <i className="fas fa-cog text-blue-500"></i>
+                  </div>
+                  <div className="ml-3">
+                    <h4 className="font-medium">General</h4>
+                    <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+                      Bot information and general commands
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
