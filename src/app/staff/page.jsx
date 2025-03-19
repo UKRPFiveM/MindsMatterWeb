@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
+import ContextMenu from '@/components/ContextMenu';
 
 function StaffPage() {
   const [isDark, setIsDark] = useState(false);
@@ -10,8 +11,44 @@ function StaffPage() {
   const router = useRouter();
   
 
-  useEffect(() => {
+  const [showContextMenu, setShowContextMenu] = useState(false);
+  
 
+  const contextMenuItems = [
+    {
+      label: "Home",
+      icon: "fas fa-home",
+      onClick: () => navigateToSection("home")
+    },
+    {
+      label: "Commands",
+      icon: "fas fa-terminal",
+      onClick: () => navigateToSection("commands")
+    },
+    {
+      label: "Get Help",
+      icon: "fas fa-hands-helping",
+      onClick: () => navigateToSection("help")
+    },
+    {
+      label: "Partners",
+      icon: "fas fa-handshake",
+      onClick: () => navigateToSection("partners")
+    },
+    { divider: true },
+    {
+      label: "Join Discord",
+      icon: "fab fa-discord",
+      onClick: () => router.push("/redirect?to=discord")
+    },
+    {
+      label: "Add Bot",
+      icon: "fas fa-robot",
+      onClick: () => router.push("/redirect?to=bot")
+    }
+  ];
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       const storedDarkMode = localStorage.getItem('darkMode');
       if (storedDarkMode !== null) {
@@ -97,7 +134,6 @@ function StaffPage() {
     <div className={`min-h-screen font-poppins ${
       isDark ? "bg-gray-900 text-white" : "bg-gradient-to-b from-white to-gray-100 text-gray-800"
     }`}>
-      {/* Navigation */}
       <nav className={`backdrop-blur-lg ${
         isDark ? "bg-gray-800/80" : "bg-white/80"
       } sticky top-0 z-50 border-b ${
@@ -160,10 +196,8 @@ function StaffPage() {
                 )}
               </div>
               
-              {/* Removed dark mode button and hamburger menu button */}
             </div>
-            
-            {/* Desktop Menu */}
+
             <div className="hidden md:flex items-center space-x-8">
               <button
                 onClick={() => navigateToSection("home")}
@@ -203,7 +237,6 @@ function StaffPage() {
               >
                 Staff
               </a>
-              {/* Removed dark mode toggle button */}
             </div>
           </div>
           
@@ -211,7 +244,7 @@ function StaffPage() {
         </div>
       </nav>
 
-      {/* Main Content */}
+
       <main className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] text-transparent bg-clip-text mb-4">
@@ -269,7 +302,6 @@ function StaffPage() {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className={`${
         isDark ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
       } mt-20 py-8 border-t`}>
@@ -279,6 +311,12 @@ function StaffPage() {
           </p>
         </div>
       </footer>
+      
+
+      <ContextMenu 
+        items={contextMenuItems}
+        onClose={() => setShowContextMenu(false)}
+      />
     </div>
   );
 }

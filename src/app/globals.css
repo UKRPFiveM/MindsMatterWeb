@@ -222,3 +222,28 @@ html.dark-mode {
 .slide-in-up {
   animation: slide-in-up 0.5s ease-out forwards;
 }
+
+
+/* Add this to the end of your globals.css file */
+
+/* Context Menu Styles */
+.context-menu-enter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.context-menu-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+
+.context-menu-exit {
+  opacity: 1;
+}
+
+.context-menu-exit-active {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+}

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams, useRouter } from 'next/navigation';
+import ContextMenu from '@/components/ContextMenu';
 
 function MainComponent() {
   const searchParams = useSearchParams();
@@ -19,7 +20,6 @@ function MainComponent() {
     whyPartner: ""
   });
   
-  // Command filtering and display state
   const [activeCommandCategory, setActiveCommandCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -27,6 +27,49 @@ function MainComponent() {
   const commandsRef = useRef(null);
   const helpRef = useRef(null);
   const partnersRef = useRef(null);
+  
+  // Context menu state
+  const [showContextMenu, setShowContextMenu] = useState(false);
+  
+  // Context menu items
+  const contextMenuItems = [
+    {
+      label: "Home",
+      icon: "fas fa-home",
+      onClick: () => scrollToSection("home")
+    },
+    {
+      label: "Commands",
+      icon: "fas fa-terminal",
+      onClick: () => scrollToSection("commands")
+    },
+    {
+      label: "Get Help",
+      icon: "fas fa-hands-helping",
+      onClick: () => scrollToSection("help")
+    },
+    {
+      label: "Partners",
+      icon: "fas fa-handshake",
+      onClick: () => scrollToSection("partners")
+    },
+    { divider: true },
+    {
+      label: "Staff Page",
+      icon: "fas fa-users",
+      onClick: () => router.push("/staff")
+    },
+    {
+      label: "Join Discord",
+      icon: "fab fa-discord",
+      onClick: () => router.push("/redirect?to=discord")
+    },
+    {
+      label: "Add Bot",
+      icon: "fas fa-robot",
+      onClick: () => router.push("/redirect?to=bot")
+    }
+  ];
   
 
   useEffect(() => {
@@ -1091,6 +1134,10 @@ function MainComponent() {
           }
         }
       `}</style>
+  <ContextMenu 
+        items={contextMenuItems}
+        onClose={() => setShowContextMenu(false)}
+      />
     </div>
   );
 }

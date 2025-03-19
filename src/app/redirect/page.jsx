@@ -1,12 +1,14 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import ContextMenu from '@/components/ContextMenu';
 
 export default function RedirectPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [countdown, setCountdown] = useState(3);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [showContextMenu, setShowContextMenu] = useState(false);
   
   const destination = searchParams.get('to');
   const type = searchParams.get('type') || 'discord';
@@ -22,6 +24,39 @@ export default function RedirectPage() {
     discord: "Discord Server",
     bot: "Add Bot to Server"
   };
+  
+  // Context menu items
+  const contextMenuItems = [
+    {
+      label: "Copy Link",
+      icon: "fas fa-copy",
+      onClick: () => {
+        navigator.clipboard.writeText(urls[destination] || "");
+      }
+    },
+    {
+      label: "Open in New Tab",
+      icon: "fas fa-external-link-alt",
+      onClick: () => {
+        window.open(urls[destination], '_blank');
+      }
+    },
+    { divider: true },
+    {
+      label: "Cancel Redirect",
+      icon: "fas fa-times",
+      onClick: () => {
+        router.push('/');
+      }
+    },
+    {
+      label: "Go Now",
+      icon: "fas fa-arrow-right",
+      onClick: () => {
+        window.location.href = urls[destination];
+      }
+    }
+  ];
   
   useEffect(() => {
     // If no valid destination, redirect to home
@@ -84,8 +119,6 @@ export default function RedirectPage() {
           You will be redirected in <span className="font-bold text-[#4F46E5]">{countdown}</span> seconds...
         </p>
         
-        {/* Removed the Cancel and Go Now buttons */}
-        
         {/* Animated loading icon */}
         <div className="mt-8 flex justify-center">
           <div className="animate-spin h-8 w-8 border-4 border-[#4F46E5] border-t-transparent rounded-full"></div>
@@ -95,6 +128,12 @@ export default function RedirectPage() {
       <div className="mt-6 text-gray-500 text-sm">
         <p>Minds Matter UK • Mental Health Support</p>
       </div>
+      
+      {/* Context Menu */}
+      <ContextMenu 
+        items={contextMenuItems}
+        onClose={() => setShowContextMenu(false)}
+      />
     </div>
   );
 }
