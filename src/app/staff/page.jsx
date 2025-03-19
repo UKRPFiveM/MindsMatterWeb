@@ -60,25 +60,11 @@ function StaffPage() {
       description: "Handles moderation and community management"
     },
     {
-      name: "Luppy",
-      discordName: "luppy025",
+      name: "Solar",
+      discordName: ".sol\_69.",
       role: "Management Team",
-      avatar: "/luppu.png",
+      avatar: "/sol.png",
       description: "Handles community management"
-    },
-    {
-      name: "Connor",
-      discordName: "cxznnoro",
-      role: "Partnership Manager",
-      avatar: "/connor.png",
-      description: "Handles outreach and new partnerships"
-    },
-    {
-      name: "Tubbzz",
-      discordName: "del_sys32",
-      role: "Support Team",
-      avatar: "/tubzz.png",
-      description: "Provides community support and assistance"
     },
     {
       name: "Charlie",
@@ -88,10 +74,10 @@ function StaffPage() {
       description: "Provides community support and assistance"
     },
     {
-      name: "Solar",
-      discordName: ".sol\_69.",
+      name: "Elon",
+      discordName: "dylbop",
       role: "Support Team",
-      avatar: "/sol.png",
+      avatar: "/elon.png",
       description: "Provides community support and assistance"
     }
   ];

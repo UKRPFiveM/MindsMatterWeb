@@ -217,18 +217,6 @@ function MainComponent() {
   
   const partners = [
     {
-      name: "London's Frontline RP",
-      logo: "/LFRP_Logo.png",
-      invite: "https://discord.gg/E276UvPTBm",
-      description: "A returning FiveM community called London's Frontline Roleplay"
-    },
-    {
-      name: "Blake's Community",
-      logo: "/blake.png",
-      invite: "https://discord.gg/SqPKkBxWhc",
-      description: "A streaming community where you can make friends that last. "
-    },
-    {
       name: "BeePlayzz_ Hangout",
       logo: "/bee.png",
       invite: "https://discord.gg/jBjw2S6D2A",
@@ -865,12 +853,12 @@ function MainComponent() {
             We're proud to partner with these communities that support Minds Matter.
             </p>
             
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="flex justify-center">
               {partners.map((partner) => (
                 <div 
                   key={partner.name}
                   className={`${isDark ? "bg-gray-800" : "bg-white"} rounded-lg p-6 shadow-sm border 
-                  ${isDark ? "border-gray-700" : "border-gray-200"} hover:border-[#4F46E5]/50 transition-all flex flex-col items-center text-center`}
+                  ${isDark ? "border-gray-700" : "border-gray-200"} hover:border-[#4F46E5]/50 transition-all flex flex-col items-center text-center max-w-md`}
                 >
                   <div className="w-32 h-32 mb-4 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
                     <img 
