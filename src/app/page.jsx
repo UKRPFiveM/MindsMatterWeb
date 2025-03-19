@@ -526,7 +526,7 @@ function MainComponent() {
                 className="animate-[float_3s_ease-in-out_infinite]"
               >
                 <a
-                  href="https://discord.com/api/oauth2/authorize?client_id=1282723690311581756&permissions=0&scope=bot%20applications.commands"
+                  href="/redirect?to=bot"
                   className={`bg-[#4F46E5] hover:bg-[#4338CA] px-8 py-4 rounded-xl text-white font-bold text-lg inline-flex items-center space-x-3 shadow-lg hover:shadow-[#4F46E5]/20 transition-all ${
                     isHovered ? "scale-105" : ""
                   }`}
@@ -543,7 +543,7 @@ function MainComponent() {
                 className="animate-[float_3s_ease-in-out_infinite]"
               >
                 <a
-                  href="https://discord.gg/w44ttXFrGK" 
+                  href="/redirect?to=discord" 
                   className={`bg-[#4F46E5] hover:bg-[#4338CA] px-8 py-4 rounded-xl text-white font-bold text-lg inline-flex items-center space-x-3 shadow-lg hover:shadow-[#4F46E5]/20 transition-all ${
                     isHovered ? "scale-105" : ""
                   }`}
