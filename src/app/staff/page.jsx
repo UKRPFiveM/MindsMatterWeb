@@ -243,7 +243,20 @@ function StaffPage() {
                   />
                 </div>
                 <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                <p className="text-[#4F46E5] font-medium mb-2">{member.role}</p>
+                
+                {}
+                <div className="relative mb-3 transform hover:scale-105 transition-transform duration-200">
+                  <span className={`inline-block px-4 py-1.5 rounded-full font-bold text-white 
+                    ${member.role === "Owner" 
+                      ? "bg-gradient-to-r from-purple-600 to-indigo-600 shadow-md shadow-purple-500/30" 
+                      : member.role.includes("Management") 
+                        ? "bg-gradient-to-r from-blue-500 to-cyan-500 shadow-md shadow-blue-500/30" 
+                        : "bg-gradient-to-r from-emerald-500 to-teal-500 shadow-md shadow-emerald-500/30"
+                    }`}>
+                    {member.role}
+                  </span>
+                </div>
+                
                 <p className={`text-sm mb-4 ${isDark ? "text-gray-400" : "text-gray-500"}`}>
                   Discord: {member.discordName}
                 </p>
