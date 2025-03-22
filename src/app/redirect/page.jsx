@@ -16,7 +16,7 @@ export default function RedirectPage() {
   // Destination URLs
   const urls = {
     discord: "https://discord.gg/w44ttXFrGK",
-    bot: "https://discord.com/api/oauth2/authorize?client_id=1282723690311581756&permissions=0&scope=bot%20applications.commands"
+    bot: "https://discord.com/oauth2/authorize?client_id=1352949579506651156&permissions=8&integration_type=0&scope=bot"
   };
   
   // Destination titles
