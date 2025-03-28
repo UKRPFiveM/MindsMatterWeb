@@ -264,6 +264,12 @@ function MainComponent() {
       logo: "/bee.png",
       invite: "https://discord.gg/jBjw2S6D2A",
       description: "A streaming community where you can hangout and make friends."
+    }, 
+    { 
+      name: "The Vibe",
+      logo: "/thevibe.png",
+      invite: "https://discord.gg/RTFQG4XdBH",
+      description: "With friendly members our server is a safe space for those who wish to engage in meaningful conversations, relax, and connect"
     }
   ];
   
