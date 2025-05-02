@@ -111,10 +111,38 @@ function StaffPage() {
       description: "Provides community support and assistance"
     },
     {
-      name: "Elon",
-      discordName: "dylbop",
+      name: "Josh",
+      discordName: "ign_josh",
+      role: "Developer",
+      avatar: "https://cdn.discordapp.com/avatars/818539885950009454/8de35293c5cae84c570aa4ccd82174ec?size=1024",
+      description: "App developer for Minds Matter UK"
+    },
+    {
+      name: "Yeet God",
+      discordName: "_xxyeetxgodxx_",
+      role: "Support Team & Mental Health First Aider",
+      avatar: "https://cdn.discordapp.com/avatars/931484963197571082/b8d5e543e0c524b432e57ff3b3676e01?size=1024",
+      description: "Provides support and mental health first aid"
+    },
+    {
+      name: "Cozer",
+      discordName: "cozer044",
+      role: "Mental Health First Aider",
+      avatar: "https://cdn.discordapp.com/avatars/803005696131465216/9298e711c8ad51e68458519ffe4549e6?size=1024",
+      description: "Provides mental health first aid assistance"
+    },
+    {
+      name: "Cyran",
+      discordName: "cj_c2009",
       role: "Support Team",
-      avatar: "/elon.png",
+      avatar: "https://cdn.discordapp.com/avatars/967745735078588457/b07c6302920240bcd7a82dabae674258?size=1024",
+      description: "Provides community support and assistance"
+    },
+    {
+      name: "Ross",
+      discordName: "rossb9",
+      role: "Support Team",
+      avatar: "https://cdn.discordapp.com/avatars/535547040399228929/a91ffda5325a9b7f5a479e730ee24b17?size=1024",
       description: "Provides community support and assistance"
     }
   ];
@@ -145,7 +173,6 @@ function StaffPage() {
               </span>
             </div>
 
-            {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center space-x-4">
               <div className="relative">
                 <button
@@ -233,7 +260,7 @@ function StaffPage() {
             </div>
           </div>
 
-          {/* Removed Mobile Menu that appears when hamburger is clicked */}
+
         </div>
       </nav>
 

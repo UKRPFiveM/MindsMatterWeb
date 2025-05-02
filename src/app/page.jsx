@@ -28,10 +28,10 @@ function MainComponent() {
   const helpRef = useRef(null);
   const partnersRef = useRef(null);
 
-  // Context menu state
+
   const [showContextMenu, setShowContextMenu] = useState(false);
 
-  // Context menu items
+
   const contextMenuItems = [
     {
       label: "Home",
@@ -162,7 +162,7 @@ function MainComponent() {
     };
   }, [searchParams]);
 
-  // Command configuration
+
   const commands = {
     "Mental Health Support": [
       {
@@ -238,7 +238,7 @@ function MainComponent() {
     ],
   };
 
-  // Filter commands based on search and category
+
   const getFilteredCommands = () => {
     let filteredCommands = {};
 
@@ -299,7 +299,6 @@ function MainComponent() {
         : "bg-gradient-to-b from-white to-gray-100 text-gray-800"
         }`}
     >
-      {/* Banner removed because apps shut */}
 
       <nav
         className={`backdrop-blur-lg ${isDark ? "bg-gray-800/80" : "bg-white/80"
@@ -314,7 +313,7 @@ function MainComponent() {
                 Minds Matter
               </span>
             </div>
-            {/* Mobile Menu Button */}
+ 
             <div className="md:hidden flex items-center space-x-4">
               <div className="relative">
                 <button
@@ -374,9 +373,9 @@ function MainComponent() {
                 )}
               </div>
 
-              {/* Removing dark mode button and hamburger menu button */}
+              {}
             </div>
-            {/* Desktop Menu */}
+            {}
             <div className="hidden md:flex items-center space-x-8">
               <button
                 onClick={() => scrollToSection("home")}
@@ -442,10 +441,10 @@ function MainComponent() {
               >
                 Staff
               </a>
-              {/* Removing dark mode toggle button */}
+              {}
             </div>
           </div>
-          {/* Mobile Menu */}
+          {}
           {isMobileMenuOpen && (
             <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
               <div className="flex flex-col space-y-2">
@@ -505,7 +504,7 @@ function MainComponent() {
                 >
                   Partners
                 </button>
-                {/* Staff link with smooth transition */}
+                {}
                 <a
                   href="/staff"
                   onClick={(e) => {
@@ -527,7 +526,7 @@ function MainComponent() {
                   Staff
                 </a>
 
-                {/* Dark mode toggle button */}
+                {}
                 <button
                   onClick={() => setIsDark(!isDark)}
                   className={`px-4 py-2 rounded-lg transition-all flex items-center ${isDark
@@ -563,7 +562,7 @@ function MainComponent() {
             </div>
 
             <div className="flex flex-col md:flex-row gap-8 justify-center items-center mt-12">
-              {/* Add to Discord Button */}
+              {}
               <div
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
@@ -579,7 +578,7 @@ function MainComponent() {
                 </a>
               </div>
 
-              {/* Join Discord Server Button */}
+              {}
               <div
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
@@ -640,7 +639,7 @@ function MainComponent() {
               Bot Commands
             </h2>
 
-            {/* Search and filter controls */}
+            {}
             <div className={`${isDark ? "bg-gray-800" : "bg-white"} rounded-lg p-6 shadow-sm border ${isDark ? "border-gray-700" : "border-gray-200"} mb-6`}>
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
@@ -674,7 +673,7 @@ function MainComponent() {
               </div>
             </div>
 
-            {/* Command cards */}
+            {}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {Object.entries(getFilteredCommands()).map(([category, cmds]) => (
                 cmds.map((cmd) => (
@@ -714,9 +713,9 @@ function MainComponent() {
                           <button
                             className="text-sm text-[#4F46E5] hover:text-[#4338CA] transition-colors"
                             onClick={() => {
-                              // Copy command to clipboard
+                              
                               navigator.clipboard.writeText(cmd.name);
-                              // You could add a toast notification here
+                              
                             }}
                           >
                             <i className="far fa-copy mr-1"></i> Copy
@@ -729,7 +728,7 @@ function MainComponent() {
               ))}
             </div>
 
-            {/* No results message */}
+            {}
             {Object.keys(getFilteredCommands()).length === 0 && (
               <div className={`${isDark ? "bg-gray-800" : "bg-white"} rounded-lg p-8 shadow-sm border ${isDark ? "border-gray-700" : "border-gray-200"} text-center`}>
                 <i className="fas fa-search text-4xl text-gray-400 mb-4"></i>
@@ -749,7 +748,7 @@ function MainComponent() {
               </div>
             )}
 
-            {/* Command categories explanation */}
+            {}
             <div className={`${isDark ? "bg-gray-800" : "bg-gray-50"} rounded-lg p-6 mt-8 border ${isDark ? "border-gray-700" : "border-gray-200"}`}>
               <h3 className="text-lg font-semibold mb-4">Command Categories</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -921,7 +920,7 @@ function MainComponent() {
               </button>
             </div>
 
-            {/* Success Confirmation Toast */}
+            {}
             {showConfirmation && (
               <div className="fixed bottom-4 right-4 bg-[#4F46E5] text-white px-6 py-4 rounded-xl shadow-lg animate-[fadeIn_0.3s_ease-out] z-50 flex items-center space-x-2">
                 <i className="fas fa-check-circle text-xl" />
@@ -929,7 +928,7 @@ function MainComponent() {
               </div>
             )}
 
-            {/* Partnership Application Modal */}
+            {}
             {showPartnerModal && (
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
                 <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl transform transition-all animate-slideIn">
@@ -950,7 +949,7 @@ function MainComponent() {
 
                       const embed = {
                         title: "New Partnership Application",
-                        color: 5165349, // #4F46E5 in decimal
+                        color: 5165349, 
                         fields: [
                           {
                             name: "Discord ID",
@@ -1055,7 +1054,7 @@ function MainComponent() {
               </div>
             )}
 
-            {/* Success Confirmation Modal */}
+            {}
             {showConfirmation && (
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
                 <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 transform transition-all animate-slideIn text-center">

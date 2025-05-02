@@ -55,7 +55,7 @@
   animation: slideIn 0.3s ease-out;
 }
 
-/* Mobile optimizations */
+
 @media (max-width: 768px) {
   .container {
     padding-left: 1rem;
@@ -77,7 +77,7 @@
   }
 }
 
-/* Smooth transitions */
+
 .transition-all {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -88,12 +88,12 @@
   transform-origin: center;
 }
 
-/* Mobile menu transition */
+
 .md\:hidden {
   transition: max-height 0.3s ease-in-out;
 }
 
-/* Improved button interactions */
+
 button:active {
   transform: scale(0.98);
 }
@@ -103,7 +103,7 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-/* Enhanced accessibility */
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -113,7 +113,6 @@ button:focus-visible {
   }
 }
 
-/* Fancy button styles */
 .fancy-button {
   position: relative;
   transition: all 0.3s ease-in-out;
@@ -224,9 +223,7 @@ html.dark-mode {
 }
 
 
-/* Add this to the end of your globals.css file */
 
-/* Context Menu Styles */
 .context-menu-enter {
   opacity: 0;
   transform: scale(0.95);

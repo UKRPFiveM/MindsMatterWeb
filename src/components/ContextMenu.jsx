@@ -22,7 +22,7 @@ const ContextMenu = ({ items, onClose }) => {
     document.addEventListener('contextmenu', handleContextMenu);
     document.addEventListener('click', handleClick);
     
-    // Close menu on escape key
+    
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         setVisible(false);
@@ -39,7 +39,7 @@ const ContextMenu = ({ items, onClose }) => {
     };
   }, [onClose]);
 
-  // Adjust position if menu would go off screen
+  
   useEffect(() => {
     if (visible && menuRef.current) {
       const menuRect = menuRef.current.getBoundingClientRect();
